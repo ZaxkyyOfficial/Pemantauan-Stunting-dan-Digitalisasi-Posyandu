@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --spruce: #0C2E28;
+      --spruce-light: #16433B;
+      --spruce-dark: #071C18;
+      --sage: #4E8752;
+      --sage-muted: #EBF2EC;
+      --terracotta: #C85A32;
+      --terracotta-muted: #FAECE7;
+      --bone: #F8FAFC;
+      --surface: #FFFFFF;
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --border: #E2E8F0;
+      --border-dark: #CBD5E1;
+      --sidebar-width: 260px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bone);
+      color: var(--text-main);
+      display: flex;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: var(--spruce);
+      position: fixed;
+      left: 0;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      z-index: 100;
+    }
+
+    .sidebar-header {
+      padding: 1.5rem 1.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .sidebar-logo {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+    }
+
+    .sidebar-brand-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    .sidebar-brand-sub {
+      font-size: 0.6875rem;
+      color: #94A3B8;
+      letter-spacing: 0.02em;
+    }
+
+    .sidebar-section-title {
+      padding: 1.25rem 1.25rem 0.5rem;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      color: #64748B;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 0.25rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.625rem 0.875rem;
+      border-radius: 6px;
+      color: #CBD5E1;
+      text-decoration: none;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      transition: background-color 0.12s ease, color 0.12s ease;
+    }
+
+    .sidebar-link:hover {
+      background: var(--spruce-light);
+      color: #FFFFFF;
+    }
+
+    .sidebar-link.active {
+      background: #123C34;
+      color: #FFFFFF;
+      font-weight: 600;
+      border-left: 3px solid var(--sage);
+    }
+
+    .sidebar-link .nav-icon {
+      flex-shrink: 0;
+      color: #94A3B8;
+      transition: color 0.12s ease;
+    }
+
+    .sidebar-link:hover .nav-icon,
+    .sidebar-link.active .nav-icon {
+      color: #A7F3D0;
+    }
+
+    .sidebar-footer {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: var(--spruce-dark);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      background: #16433B;
+      color: #FFFFFF;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .user-details {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .user-name {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-role {
+      font-size: 0.6875rem;
+      color: #94A3B8;
+    }
+
+    .btn-logout {
+      display: block;
+      width: 100%;
+      padding: 0.45rem 0.5rem;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #CBD5E1;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background-color 0.15s ease;
+    }
+
+    .btn-logout:hover {
+      background: rgba(200, 90, 50, 0.2);
+      border-color: var(--terracotta);
+      color: #FFFFFF;
+    }
+
+    .main-wrapper {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      height: 60px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .breadcrumb {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .breadcrumb-active {
+      font-weight: 600;
+      color: var(--spruce);
+    }
+
+    .content-area {
+      padding: 1.75rem 2rem 3rem;
+    }
+
+    .page-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 1.75rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .page-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.375rem;
+      font-weight: 700;
+      color: var(--spruce);
+      letter-spacing: -0.02em;
+    }
+
+    .page-desc {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .recipe-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.15s ease;
+    }
+
+    .recipe-card:hover {
+      border-color: var(--sage);
+    }
+
+    .recipe-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+
+    .recipe-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--spruce);
+      line-height: 1.3;
+    }
+
+    .age-badge {
+      background: var(--sage-muted);
+      color: var(--sage);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      border: 1px solid rgba(78, 135, 82, 0.3);
+    }
+
+    .recipe-desc {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+      flex: 1;
+    }
+
+    .nutrition-row {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .nutrition-pill {
+      flex: 1;
+      background: #F8FAFC;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.5rem;
+      text-align: center;
+    }
+
+    .nutrition-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--spruce);
+    }
+
+    .nutrition-label {
+      font-size: 0.625rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .recipe-footer {
+      border-top: 1px solid var(--border);
+      padding-top: 0.875rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+    }
+
+    .cost-label {
+      font-weight: 600;
+      color: var(--spruce);
+    }
+
+    .cost-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 0.875rem;
+      color: var(--sage);
+    }
+
+    .ingredients-box {
+      background: #F1F5F9;
+      border-radius: 4px;
+      padding: 0.5rem 0.75rem;
+      margin-bottom: 0.875rem;
+      font-size: 0.75rem;
+      color: #334155;
+    }
+
+    .ingredients-title {
+      font-weight: 700;
+      color: var(--spruce);
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .tabular-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-variant-numeric: tabular-nums;
+    }
+  </style>
+</head>
+<body>
+
+  <%- include('partials/sidebar', { activeMenu: 'mpasi', user }) %>
+
+  <div class="main-wrapper">
+    <header class="topbar">
+      <div class="breadcrumb">
+        <span>Surveilans</span>
+        <span>/</span>
+        <span class="breadcrumb-active">Rekomendasi Menu Lokal MPASI</span>
+      </div>
+      <div>
+        <span class="tabular-num" style="font-size: 0.8125rem; color: var(--text-muted);">
+          Total Formula: <strong><%= resepList.length %></strong> Resep
+        </span>
+      </div>
+    </header>
+
+    <main class="content-area">
+      <div class="page-header-row">
+        <div>
+          <h1 class="page-title">Katalog Menu MPASI Pangan Lokal</h1>
+          <p class="page-desc">Formulasi gizi padat energi kaya protein hewani dan zat besi sesuai standar pedoman gizi Kemenkes RI.</p>
+        </div>
+      </div>
+
+      <div class="recipe-grid">
+        <% resepList.forEach(resep => { %>
+          <div class="recipe-card">
+            <div class="recipe-header">
+              <div class="recipe-name"><%= resep.nama_resep %></div>
+              <span class="age-badge"><%= resep.kelompok_usia_bulan %> Bulan</span>
+            </div>
+
+            <div class="recipe-desc"><%= resep.cara_pembuatan %></div>
+
+            <div class="ingredients-box">
+              <div class="ingredients-title">Komposisi Pangan Lokal:</div>
+              <div><%= resep.bahan_list || 'Bahan lokal standar Posyandu' %></div>
+            </div>
+
+            <div class="nutrition-row">
+              <div class="nutrition-pill">
+                <div class="nutrition-val tabular-num"><%= Math.round(resep.total_kalori) %></div>
+                <div class="nutrition-label">Kalori (kkal)</div>
+              </div>
+              <div class="nutrition-pill">
+                <div class="nutrition-val tabular-num" style="color: var(--sage);"><%= Number(resep.total_protein).toFixed(1) %>g</div>
+                <div class="nutrition-label">Protein</div>
+              </div>
+              <div class="nutrition-pill">
+                <div class="nutrition-val tabular-num" style="color: var(--terracotta);"><%= Number(resep.total_zat_besi).toFixed(1) %>mg</div>
+                <div class="nutrition-label">Zat Besi (Fe)</div>
+              </div>
+            </div>
+
+            <div class="recipe-footer">
+              <span class="cost-label">Estimasi Biaya Bahan:</span>
+              <span class="cost-val tabular-num">Rp <%= Number(resep.estimasi_biaya || 5000).toLocaleString('id-ID') %> / porsi</span>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

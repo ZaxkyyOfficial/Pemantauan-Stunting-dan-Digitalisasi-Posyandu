@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --spruce: #0C2E28;
+      --spruce-light: #16433B;
+      --sage: #4E8752;
+      --sage-muted: #EBF2EC;
+      --terracotta: #C85A32;
+      --terracotta-muted: #FAECE7;
+      --bone: #F8FAFC;
+      --surface: #FFFFFF;
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --border: #E2E8F0;
+      --focus-ring: #0C2E28;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bone);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .auth-container {
+      width: 100%;
+      max-width: 520px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2.25rem 2rem;
+    }
+
+    .auth-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.25rem;
+    }
+
+    .auth-logo {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      margin-bottom: 0.75rem;
+    }
+
+    .auth-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--spruce);
+      letter-spacing: -0.02em;
+    }
+
+    .auth-subtitle {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-top: 0.35rem;
+    }
+
+    .alert {
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      margin-bottom: 1.25rem;
+      line-height: 1.4;
+    }
+
+    .alert-error {
+      background: var(--terracotta-muted);
+      color: var(--terracotta);
+      border: 1px solid rgba(200, 90, 50, 0.3);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 480px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.375rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select {
+      width: 100%;
+      height: 42px;
+      padding: 0 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-family: inherit;
+      color: var(--text-main);
+      background: #FFFFFF;
+      transition: border-color 0.15s ease;
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    input:focus,
+    select:focus {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 1px;
+      border-color: var(--spruce);
+    }
+
+    .btn-submit {
+      width: 100%;
+      height: 44px;
+      background: var(--spruce);
+      color: #FFFFFF;
+      border: 1px solid var(--spruce);
+      border-radius: 6px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background-color 0.15s ease;
+    }
+
+    .btn-submit:hover {
+      background: var(--spruce-light);
+    }
+
+    .btn-submit:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+
+    .auth-footer-nav {
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .auth-footer-nav a {
+      color: var(--spruce);
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .auth-footer-nav a:hover {
+      color: var(--spruce-light);
+    }
+  </style>
+</head>
+<body>
+
+  <main class="auth-container" role="main">
+    <header class="auth-header">
+      <img src="/public/images/logo.png" alt="Logo Resmi TumbuhSehat" class="auth-logo" onerror="this.style.display='none'">
+      <h1 class="auth-title">Registrasi Petugas Surveilans</h1>
+      <p class="auth-subtitle">Pendaftaran Akun Puskesmas dan Kader Posyandu</p>
+    </header>
+
+    <% if (error) { %>
+      <div class="alert alert-error" role="alert">
+        <%= error %>
+      </div>
+    <% } %>
+
+    <form action="/register" method="POST" novalidate>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label for="nama_lengkap">Nama Lengkap Petugas</label>
+          <input 
+            type="text" 
+            id="nama_lengkap" 
+            name="nama_lengkap" 
+            value="<%= formData?.nama_lengkap || '' %>" 
+            required 
+            placeholder="cth: dr. Siti Aminah / Bdn. Rahmawati"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="nik_nip">Nomor Induk Pegawai / NIK</label>
+          <input 
+            type="text" 
+            id="nik_nip" 
+            name="nik_nip" 
+            value="<%= formData?.nik_nip || '' %>" 
+            required 
+            placeholder="16 digit angka"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Dinas / Pribadi</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            value="<%= formData?.email || '' %>" 
+            required 
+            placeholder="nama@puskesmas.go.id"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="peran_id">Peran Otoritas</label>
+          <select id="peran_id" name="peran_id" required>
+            <option value="">Pilih Peran Petugas</option>
+            <% (peranList || []).forEach(p => { %>
+              <option value="<%= p.id %>" <%= (formData?.peran_id == p.id) ? 'selected' : '' %>>
+                <%= p.nama_peran %>
+              </option>
+            <% }); %>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="posyandu_id">Posyandu Wilayah Binaan</label>
+          <select id="posyandu_id" name="posyandu_id">
+            <option value="">Pilih Posyandu (Opsional)</option>
+            <% (posyanduList || []).forEach(pos => { %>
+              <option value="<%= pos.id %>" <%= (formData?.posyandu_id == pos.id) ? 'selected' : '' %>>
+                <%= pos.nama_posyandu %>
+              </option>
+            <% }); %>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Kata Sandi Baru</label>
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            required 
+            placeholder="Minimal 6 karakter"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="confirm_password">Konfirmasi Kata Sandi</label>
+          <input 
+            type="password" 
+            id="confirm_password" 
+            name="confirm_password" 
+            required 
+            placeholder="Ketik ulang kata sandi"
+          >
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit">Daftarkan Akun Petugas</button>
+    </form>
+
+    <div class="auth-footer-nav">
+      Sudah memiliki akun terdaftar? <a href="/login">Kembali ke Halaman Masuk</a>
+    </div>
+  </main>
+
+</body>
+</html>

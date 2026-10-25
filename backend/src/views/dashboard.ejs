@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --spruce: #0C2E28;
+      --spruce-light: #16433B;
+      --spruce-dark: #071C18;
+      --sage: #4E8752;
+      --sage-muted: #EBF2EC;
+      --terracotta: #C85A32;
+      --terracotta-muted: #FAECE7;
+      --terracotta-dark: #9A3815;
+      --bone: #F8FAFC;
+      --surface: #FFFFFF;
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --border: #E2E8F0;
+      --border-dark: #CBD5E1;
+      --sidebar-width: 260px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bone);
+      color: var(--text-main);
+      display: flex;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: var(--spruce);
+      position: fixed;
+      left: 0;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      z-index: 100;
+    }
+
+    .sidebar-header {
+      padding: 1.5rem 1.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .sidebar-logo {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+    }
+
+    .sidebar-brand-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    .sidebar-brand-sub {
+      font-size: 0.6875rem;
+      color: #94A3B8;
+      letter-spacing: 0.02em;
+    }
+
+    .sidebar-section-title {
+      padding: 1.25rem 1.25rem 0.5rem;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      color: #64748B;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 0.25rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.625rem 0.75rem;
+      border-radius: 6px;
+      color: #CBD5E1;
+      text-decoration: none;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      transition: background-color 0.12s ease, color 0.12s ease;
+    }
+
+    .sidebar-link:hover {
+      background: var(--spruce-light);
+      color: #FFFFFF;
+    }
+
+    .sidebar-link.active {
+      background: #123C34;
+      color: #FFFFFF;
+      font-weight: 600;
+      border-left: 3px solid var(--sage);
+    }
+
+    .sidebar-link .nav-icon {
+      flex-shrink: 0;
+      color: #94A3B8;
+      transition: color 0.12s ease;
+    }
+
+    .sidebar-link:hover .nav-icon,
+    .sidebar-link.active .nav-icon {
+      color: #A7F3D0;
+    }
+
+    .sidebar-footer {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: var(--spruce-dark);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      background: #16433B;
+      color: #FFFFFF;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .user-details {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .user-name {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-role {
+      font-size: 0.6875rem;
+      color: #94A3B8;
+    }
+
+    .btn-logout {
+      display: block;
+      width: 100%;
+      padding: 0.45rem 0.5rem;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #CBD5E1;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background-color 0.15s ease;
+    }
+
+    .btn-logout:hover {
+      background: rgba(200, 90, 50, 0.2);
+      border-color: var(--terracotta);
+      color: #FFFFFF;
+    }
+
+    .main-wrapper {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .top-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0.75rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    .breadcrumb .active {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .breadcrumb .sep {
+      color: var(--border-dark);
+    }
+
+    .top-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .filter-select {
+      height: 36px;
+      padding: 0 0.75rem;
+      font-size: 0.8125rem;
+      font-family: inherit;
+      color: var(--text-main);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      outline: none;
+    }
+
+    .filter-select:focus {
+      border-color: var(--spruce);
+    }
+
+    .btn-download-excel {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      height: 36px;
+      padding: 0 0.875rem;
+      background: var(--spruce);
+      color: #FFFFFF;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      border: 1px solid var(--spruce);
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background-color 0.12s ease;
+    }
+
+    .btn-download-excel:hover {
+      background: var(--spruce-light);
+    }
+
+    .content-area {
+      padding: 1.75rem 2rem 3rem;
+    }
+
+    .page-heading {
+      margin-bottom: 1.5rem;
+    }
+
+    .page-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.375rem;
+      font-weight: 700;
+      color: var(--spruce);
+      letter-spacing: -0.02em;
+    }
+
+    .page-desc {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+
+    @media (max-width: 1024px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.25rem 1.125rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .kpi-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .kpi-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.625rem;
+      font-weight: 700;
+      color: var(--spruce);
+      margin-top: 0.5rem;
+      line-height: 1.1;
+      font-feature-settings: "tnum";
+      font-variant-numeric: tabular-nums;
+    }
+
+    .kpi-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .kpi-tag {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .kpi-tag-terracotta {
+      background: var(--terracotta-muted);
+      color: var(--terracotta);
+      border: 1px solid rgba(200, 90, 50, 0.3);
+    }
+
+    .kpi-tag-sage {
+      background: var(--sage-muted);
+      color: var(--sage);
+      border: 1px solid rgba(78, 135, 82, 0.3);
+    }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 1.75rem;
+    }
+
+    @media (max-width: 960px) {
+      .charts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .chart-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.25rem 1.5rem;
+    }
+
+    .chart-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .chart-panel-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--spruce);
+    }
+
+    .chart-panel-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .chart-wrapper {
+      position: relative;
+      height: 250px;
+      width: 100%;
+    }
+
+    .data-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 1.75rem;
+    }
+
+    .data-card-header {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .data-card-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--spruce);
+    }
+
+    .data-card-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      width: 100%;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.8125rem;
+    }
+
+    th {
+      background: #F1F5F9;
+      color: var(--text-main);
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-main);
+      vertical-align: middle;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: #FAFCFE;
+    }
+
+    .tnum {
+      font-family: 'JetBrains Mono', monospace;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum";
+    }
+
+    .badge-status {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      white-space: nowrap;
+    }
+
+    .badge-normal {
+      background: var(--sage-muted);
+      color: var(--sage);
+      border: 1px solid rgba(78, 135, 82, 0.3);
+    }
+
+    .badge-stunted {
+      background: var(--terracotta-muted);
+      color: var(--terracotta);
+      border: 1px solid rgba(200, 90, 50, 0.3);
+    }
+
+    .badge-severely {
+      background: #FEE2E2;
+      color: #991B1B;
+      border: 1px solid rgba(153, 27, 27, 0.3);
+    }
+
+    .tag-faltering {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 0.625rem;
+      font-weight: 700;
+      background: var(--terracotta);
+      color: #FFFFFF;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+
+    .dual-panel-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 860px) {
+      .dual-panel-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel-list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8125rem;
+    }
+
+    .panel-list-item:last-child {
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+
+  <%- include('partials/sidebar', { activeMenu: 'dashboard', user }) %>
+
+  <div class="main-wrapper">
+
+    <header class="top-bar" role="banner">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <span>Puskesmas <%= (typeof breadcrumb !== 'undefined' && breadcrumb.puskesmas) ? breadcrumb.puskesmas : 'Puskesmas Dringu' %></span>
+        <span class="sep">/</span>
+        <span>Wilayah <%= (typeof breadcrumb !== 'undefined' && breadcrumb.kecamatan) ? breadcrumb.kecamatan : 'Kecamatan Dringu' %></span>
+        <span class="sep">/</span>
+        <span class="active">Posyandu <span id="breadcrumbPosyandu"><%= (typeof breadcrumb !== 'undefined' && breadcrumb.posyandu) ? breadcrumb.posyandu : 'Semua Posyandu' %></span></span>
+      </nav>
+
+      <div class="top-controls">
+        <select id="posyanduFilter" class="filter-select" aria-label="Filter Posyandu Wilayah" <%= (typeof isKader !== 'undefined' && isKader) ? 'disabled' : '' %>>
+          <% if (typeof isKader === 'undefined' || !isKader) { %>
+            <option value="" <%= (!selectedPosyanduId) ? 'selected' : '' %>>Semua Posyandu Binaan</option>
+          <% } %>
+          <% if (typeof posyanduList !== 'undefined' && posyanduList.length > 0) { %>
+            <% posyanduList.forEach(p => { %>
+              <% if (typeof isKader !== 'undefined' && isKader && user.posyandu_id && user.posyandu_id !== p.id) { return; } %>
+              <option value="<%= p.id %>" <%= (selectedPosyanduId == p.id) ? 'selected' : '' %>>
+                <%= p.nama_posyandu %>
+              </option>
+            <% }) %>
+          <% } %>
+        </select>
+
+        <a href="/laporan-web" class="btn-download-excel">
+          Pusat Laporan &amp; Ekspor
+        </a>
+      </div>
+    </header>
+
+    <main class="content-area" role="main">
+
+      <div class="page-heading">
+        <h1 class="page-title">Ringkasan Surveilans Stunting Wilayah</h1>
+        <p class="page-desc">Data agregasi riil hasil pengukuran antropometri posyandu binaan periode September 2026.</p>
+      </div>
+
+      <section class="kpi-grid" aria-label="Metrik Kunci Surveilans">
+        
+        <article class="kpi-card">
+          <span class="kpi-label">Total Balita Terpantau</span>
+          <span class="kpi-val" id="kpiTotalBalita"><%= stats.totalBalita %></span>
+          <div class="kpi-sub">
+            <span class="kpi-tag kpi-tag-sage">Cakupan D/S</span>
+            <span class="tnum">100% terdata aktif</span>
+          </div>
+        </article>
+
+        <article class="kpi-card">
+          <span class="kpi-label">Prevalensi Stunting Wilayah</span>
+          <span class="kpi-val" id="kpiPrevalensi"><%= Number(stats.prevalensiStunting || 0).toFixed(2) %>%</span>
+          <div class="kpi-sub">
+            <span class="kpi-tag kpi-tag-sage">Target Nasional</span>
+            <span class="tnum">Batas toleransi &lt; 14.00%</span>
+          </div>
+        </article>
+
+        <article class="kpi-card">
+          <span class="kpi-label">Kasus Faltering (T/2T)</span>
+          <span class="kpi-val" id="kpiFaltering" style="color: var(--terracotta);"><%= stats.totalFaltering %></span>
+          <div class="kpi-sub">
+            <span class="kpi-tag kpi-tag-terracotta">Intervensi Dini</span>
+            <span>Balita berat stagnan/turun</span>
+          </div>
+        </article>
+
+        <article class="kpi-card">
+          <span class="kpi-label">Gawai Kader Aktif</span>
+          <span class="kpi-val" id="kpiPerangkat"><%= stats.totalPerangkat %> Aktif</span>
+          <div class="kpi-sub">
+            <span class="kpi-tag kpi-tag-sage">Sinkronisasi</span>
+            <span><%= stats.totalPosyandu %> Posyandu siap luring</span>
+          </div>
+        </article>
+
+      </section>
+
+      <section class="charts-grid" aria-label="Grafik Analisis Gizi">
+        
+        <div class="chart-panel">
+          <div class="chart-panel-header">
+            <div>
+              <h2 class="chart-panel-title">Tren Prevalensi Stunting per Desa (6 Bulan Terakhir)</h2>
+              <p class="chart-panel-desc">Pergerakan persentase balita pendek (TB/U &lt; -2 SD) periode April s.d. September 2026.</p>
+            </div>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="chartTrenStunting"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-panel">
+          <div class="chart-panel-header">
+            <div>
+              <h2 class="chart-panel-title">Distribusi Status Gizi</h2>
+              <p class="chart-panel-desc">Proporsi antropometri seluruh balita terdata.</p>
+            </div>
+          </div>
+          <div class="chart-wrapper">
+            <canvas id="chartDistribusiGizi"></canvas>
+          </div>
+        </div>
+
+      </section>
+
+      <section id="tabel-surveilans" class="data-card" aria-label="Tabel Pemantauan Balita">
+        <div class="data-card-header">
+          <div>
+            <h2 class="data-card-title">Data Surveilans Balita Berisiko</h2>
+            <p class="data-card-sub">Daftar balita prioritas rujukan dan tindak lanjut intervensi gizi puskesmas.</p>
+          </div>
+          <span class="tnum" id="tabelBalitaCount" style="font-size:0.75rem; color:var(--text-muted);">
+            Menampilkan <%= (balitaBerisiko || []).length %> balita terdata
+          </span>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama Balita / NIK</th>
+                <th>Usia</th>
+                <th>Nama Ibu &amp; Alamat</th>
+                <th>Antropometri Terakhir</th>
+                <th>Z-Score TB/U</th>
+                <th>Status Gizi</th>
+                <th>Deteksi Faltering</th>
+              </tr>
+            </thead>
+            <tbody id="tabelBalitaBody">
+              <% if (balitaBerisiko && balitaBerisiko.length > 0) { %>
+                <% balitaBerisiko.forEach((b, idx) => { %>
+                  <tr>
+                    <td class="tnum"><%= idx + 1 %></td>
+                    <td>
+                      <div style="font-weight:600;"><%= b.nama_lengkap %></div>
+                      <div class="tnum" style="font-size:0.75rem; color:var(--text-muted);"><%= b.nik || 'NIK Tidak Terdaftar' %></div>
+                    </td>
+                    <td class="tnum"><%= b.usiaBulan %> bln</td>
+                    <td>
+                      <div>Ibu <%= b.nama_ibu || '-' %></div>
+                      <div style="font-size:0.75rem; color:var(--text-muted);"><%= b.alamat_domisili || 'Wilayah Puskesmas' %></div>
+                    </td>
+                    <td class="tnum">
+                      <div>BB: <%= Number(b.berat_badan || 0).toFixed(2) %> kg</div>
+                      <div style="font-size:0.75rem; color:var(--text-muted);">TB: <%= Number(b.tinggi_badan || 0).toFixed(1) %> cm</div>
+                    </td>
+                    <td class="tnum">
+                      <strong><%= Number(b.zscore_tbu || 0).toFixed(2) %> SD</strong>
+                    </td>
+                    <td>
+                      <% if (b.status_stunting === 'Severely Stunted') { %>
+                        <span class="badge-status badge-severely">Sangat Pendek</span>
+                      <% } else if (b.status_stunting === 'Stunted') { %>
+                        <span class="badge-status badge-stunted">Pendek</span>
+                      <% } else { %>
+                        <span class="badge-status badge-normal">Normal</span>
+                      <% } %>
+                    </td>
+                    <td>
+                      <% if (b.indikasi_faltering) { %>
+                        <span class="kpi-tag kpi-tag-terracotta">Faltering T/2T</span>
+                      <% } else { %>
+                        <span style="color:var(--text-muted); font-size:0.75rem;">Normal (N)</span>
+                      <% } %>
+                    </td>
+                  </tr>
+                <% }); %>
+              <% } else { %>
+                <tr>
+                  <td colspan="8" style="text-align:center; padding:2rem; color:var(--text-muted);">
+                    Tidak ada catatan balita dengan indikasi risiko pada periode ini.
+                  </td>
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="dual-panel-grid">
+        
+        <section id="rekomendasi-pangan" class="data-card" aria-label="Bahan Pangan Lokal Bergizi">
+          <div class="data-card-header">
+            <div>
+              <h2 class="data-card-title">Bahan Pangan Lokal Bergizi</h2>
+              <p class="data-card-sub">Komoditas sumber protein hewani &amp; zat besi wilayah binaan.</p>
+            </div>
+          </div>
+          <div>
+            <% if (panganList && panganList.length > 0) { %>
+              <% panganList.forEach(p => { %>
+                <div class="panel-list-item">
+                  <div>
+                    <div style="font-weight:600;"><%= p.nama_bahan %></div>
+                    <div class="tnum" style="font-size:0.75rem; color:var(--text-muted);">
+                      <%= p.kalori %> kkal &bull; <%= p.protein %>g Protein &bull; <%= p.zat_besi %>mg Fe
+                    </div>
+                  </div>
+                  <span class="tnum" style="font-size:0.8125rem; font-weight:600; color:var(--spruce);">
+                    Rp <%= Number(p.harga_estimasi || 0).toLocaleString('id-ID') %>
+                  </span>
+                </div>
+              <% }); %>
+            <% } %>
+          </div>
+        </section>
+
+        <section id="log-sinkronisasi" class="data-card" aria-label="Log Transaksi Sinkronisasi">
+          <div class="data-card-header">
+            <div>
+              <h2 class="data-card-title">Log Validasi Sinkronisasi</h2>
+              <p class="data-card-sub">Audit batch transaksi masuk dari gawai offline kader posyandu.</p>
+            </div>
+          </div>
+          <div>
+            <% if (antreanLogs && antreanLogs.length > 0) { %>
+              <% antreanLogs.forEach(l => { %>
+                <div class="panel-list-item">
+                  <div>
+                    <div class="tnum" style="font-weight:600; font-size:0.8125rem;">
+                      [<%= l.aksi %>] <%= l.nama_tabel %> #<%= l.id_referensi %>
+                    </div>
+                    <div style="font-size:0.75rem; color:var(--text-muted);">Idempotensi transaksi ACID</div>
+                  </div>
+                  <span class="badge-status <%= l.status_sync === 'Berhasil' ? 'badge-normal' : 'badge-stunted' %>">
+                    <%= l.status_sync %>
+                  </span>
+                </div>
+              <% }); %>
+            <% } else { %>
+              <div style="padding:1.5rem; text-align:center; color:var(--text-muted); font-size:0.8125rem;">
+                Semua data tersinkronisasi tanpa antrean tertunda.
+              </div>
+            <% } %>
+          </div>
+        </section>
+
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    const ctxTren = document.getElementById('chartTrenStunting').getContext('2d');
+    const initialTrendData = <%- JSON.stringify(typeof chartTrend !== 'undefined' ? chartTrend : {
+      labels: ['Apr 2026', 'Mei 2026', 'Jun 2026', 'Jul 2026', 'Agu 2026', 'Sep 2026'],
+      datasets: []
+    }) %>;
+
+    initialTrendData.datasets.forEach(ds => {
+      ds.fill = false;
+      ds.borderWidth = 2;
+      ds.pointRadius = 3;
+      ds.tension = 0.1;
+    });
+
+    let chartTrenInstance = new Chart(ctxTren, {
+      type: 'line',
+      data: initialTrendData,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'top',
+            labels: {
+              font: { family: 'Inter', size: 11, weight: 600 },
+              usePointStyle: true,
+              pointStyle: 'circle'
+            }
+          }
+        },
+        scales: {
+          y: {
+            min: 0,
+            ticks: {
+              callback: v => v.toFixed(1) + '%',
+              font: { family: 'JetBrains Mono', size: 11 }
+            },
+            grid: { color: '#E2E8F0' }
+          },
+          x: {
+            ticks: { font: { family: 'Inter', size: 11 } },
+            grid: { display: false }
+          }
+        }
+      }
+    });
+
+    const ctxDoughnut = document.getElementById('chartDistribusiGizi').getContext('2d');
+    const initialDistData = <%- JSON.stringify(typeof chartDistribusi !== 'undefined' ? chartDistribusi : {
+      labels: ['Normal', 'Stunted', 'Severely Stunted'],
+      data: [0, 0, 0]
+    }) %>;
+
+    let chartDistribusiInstance = new Chart(ctxDoughnut, {
+      type: 'doughnut',
+      data: {
+        labels: initialDistData.labels,
+        datasets: [{
+          data: initialDistData.data,
+          backgroundColor: ['#4E8752', '#D97706', '#C85A32'],
+          borderWidth: 1,
+          borderColor: '#FFFFFF'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '65%',
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              font: { family: 'Inter', size: 11, weight: 500 },
+              usePointStyle: true,
+              padding: 12
+            }
+          }
+        }
+      }
+    });
+
+    function applyDashboardData(json) {
+      if (!json || !json.stats) return;
+
+      const elTotal = document.getElementById('kpiTotalBalita');
+      const elPrev = document.getElementById('kpiPrevalensi');
+      const elFalt = document.getElementById('kpiFaltering');
+      const elDev = document.getElementById('kpiPerangkat');
+
+      if (elTotal) elTotal.textContent = json.stats.totalBalita;
+      if (elPrev) elPrev.textContent = Number(json.stats.prevalensiStunting || 0).toFixed(2) + '%';
+      if (elFalt) elFalt.textContent = json.stats.totalFaltering;
+      if (elDev) elDev.textContent = json.stats.totalPerangkat + ' Aktif';
+
+      const elBreadcrumb = document.getElementById('breadcrumbPosyandu');
+      if (elBreadcrumb && json.nama_posyandu) {
+        elBreadcrumb.textContent = json.nama_posyandu;
+      }
+
+      if (chartTrenInstance && json.trend) {
+        if (json.trend.datasets) {
+          json.trend.datasets.forEach(ds => {
+            ds.fill = false;
+            ds.borderWidth = 2;
+            ds.pointRadius = 3;
+            ds.tension = 0.1;
+          });
+        }
+        chartTrenInstance.data = json.trend;
+        chartTrenInstance.update();
+      }
+
+      if (chartDistribusiInstance && json.distribusi) {
+        chartDistribusiInstance.data.labels = json.distribusi.labels;
+        chartDistribusiInstance.data.datasets[0].data = json.distribusi.data;
+        chartDistribusiInstance.update();
+      }
+
+      const tbody = document.getElementById('tabelBalitaBody');
+      const countEl = document.getElementById('tabelBalitaCount');
+
+      if (tbody && json.balitaBerisiko) {
+        if (countEl) countEl.textContent = `Menampilkan ${json.balitaBerisiko.length} balita terdata`;
+
+        if (json.balitaBerisiko.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="8" style="text-align:center; padding:2rem; color:var(--text-muted);">
+                Tidak ada catatan balita dengan indikasi risiko pada posyandu ini.
+              </td>
+            </tr>
+          `;
+        } else {
+          let rowsHtml = '';
+          json.balitaBerisiko.forEach((b, idx) => {
+            let statusBadge = '<span class="badge-status badge-normal">Normal</span>';
+            if (b.status_stunting === 'Severely Stunted') {
+              statusBadge = '<span class="badge-status badge-severely">Sangat Pendek</span>';
+            } else if (b.status_stunting === 'Stunted') {
+              statusBadge = '<span class="badge-status badge-stunted">Pendek</span>';
+            }
+
+            let falteringBadge = '<span style="color:var(--text-muted); font-size:0.75rem;">Normal (N)</span>';
+            if (b.indikasi_faltering) {
+              falteringBadge = '<span class="kpi-tag kpi-tag-terracotta">Faltering T/2T</span>';
+            }
+
+            rowsHtml += `
+              <tr>
+                <td class="tnum">${idx + 1}</td>
+                <td>
+                  <div style="font-weight:600;">${b.nama_lengkap}</div>
+                  <div class="tnum" style="font-size:0.75rem; color:var(--text-muted);">${b.nik || 'NIK Tidak Terdaftar'}</div>
+                </td>
+                <td class="tnum">${b.usiaBulan} bln</td>
+                <td>
+                  <div>Ibu ${b.nama_ibu || '-'}</div>
+                  <div style="font-size:0.75rem; color:var(--text-muted);">${b.alamat_domisili || 'Wilayah Puskesmas'}</div>
+                </td>
+                <td class="tnum">
+                  <div>BB: ${Number(b.berat_badan || 0).toFixed(2)} kg</div>
+                  <div style="font-size:0.75rem; color:var(--text-muted);">TB: ${Number(b.tinggi_badan || 0).toFixed(1)} cm</div>
+                </td>
+                <td class="tnum">
+                  <strong>${Number(b.zscore_tbu || 0).toFixed(2)} SD</strong>
+                </td>
+                <td>${statusBadge}</td>
+                <td>${falteringBadge}</td>
+              </tr>
+            `;
+          });
+          tbody.innerHTML = rowsHtml;
+        }
+      }
+    }
+
+    const filterSelect = document.getElementById('posyanduFilter');
+    if (filterSelect) {
+      filterSelect.addEventListener('change', async function () {
+        const val = this.value;
+        try {
+          const url = val ? `/api/v1/dashboard/stats?posyandu_id=${val}` : '/api/v1/dashboard/stats';
+          const res = await fetch(url);
+          const json = await res.json();
+          if (json.sukses) {
+            applyDashboardData(json);
+          }
+        } catch (err) {
+          console.error('Gagal memperbarui data posyandu:', err);
+        }
+      });
+    }
+
+    setInterval(async () => {
+      try {
+        const val = filterSelect ? filterSelect.value : '';
+        const url = val ? `/api/v1/dashboard/stats?posyandu_id=${val}` : '/api/v1/dashboard/stats';
+        const res = await fetch(url);
+        const json = await res.json();
+        if (json.sukses) {
+          applyDashboardData(json);
+        }
+      } catch (err) {
+      }
+    }, 30000);
+  </script>
+
+</body>
+</html>

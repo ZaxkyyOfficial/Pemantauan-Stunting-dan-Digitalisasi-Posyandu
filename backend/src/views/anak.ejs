@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --spruce: #0C2E28;
+      --spruce-light: #16433B;
+      --spruce-dark: #071C18;
+      --sage: #4E8752;
+      --sage-muted: #EBF2EC;
+      --terracotta: #C85A32;
+      --terracotta-muted: #FAECE7;
+      --bone: #F8FAFC;
+      --surface: #FFFFFF;
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --border: #E2E8F0;
+      --border-dark: #CBD5E1;
+      --sidebar-width: 260px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bone);
+      color: var(--text-main);
+      display: flex;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: var(--spruce);
+      position: fixed;
+      left: 0;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      z-index: 100;
+    }
+
+    .sidebar-header {
+      padding: 1.5rem 1.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .sidebar-logo {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+    }
+
+    .sidebar-brand-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    .sidebar-brand-sub {
+      font-size: 0.6875rem;
+      color: #94A3B8;
+      letter-spacing: 0.02em;
+    }
+
+    .sidebar-section-title {
+      padding: 1.25rem 1.25rem 0.5rem;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      color: #64748B;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 0.25rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.625rem 0.875rem;
+      border-radius: 6px;
+      color: #CBD5E1;
+      text-decoration: none;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      transition: background-color 0.12s ease, color 0.12s ease;
+    }
+
+    .sidebar-link:hover {
+      background: var(--spruce-light);
+      color: #FFFFFF;
+    }
+
+    .sidebar-link.active {
+      background: #123C34;
+      color: #FFFFFF;
+      font-weight: 600;
+      border-left: 3px solid var(--sage);
+    }
+
+    .sidebar-link .nav-icon {
+      flex-shrink: 0;
+      color: #94A3B8;
+      transition: color 0.12s ease;
+    }
+
+    .sidebar-link:hover .nav-icon,
+    .sidebar-link.active .nav-icon {
+      color: #A7F3D0;
+    }
+
+    .sidebar-footer {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: var(--spruce-dark);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      background: #16433B;
+      color: #FFFFFF;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .user-details {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .user-name {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-role {
+      font-size: 0.6875rem;
+      color: #94A3B8;
+    }
+
+    .btn-logout {
+      display: block;
+      width: 100%;
+      padding: 0.45rem 0.5rem;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #CBD5E1;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background-color 0.15s ease;
+    }
+
+    .btn-logout:hover {
+      background: rgba(200, 90, 50, 0.2);
+      border-color: var(--terracotta);
+      color: #FFFFFF;
+    }
+
+    .main-wrapper {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      height: 60px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .breadcrumb {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .breadcrumb-active {
+      font-weight: 600;
+      color: var(--spruce);
+    }
+
+    .content-area {
+      padding: 1.75rem 2rem 3rem;
+    }
+
+    .page-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .page-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.375rem;
+      font-weight: 700;
+      color: var(--spruce);
+      letter-spacing: -0.02em;
+    }
+
+    .page-desc {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .btn-tambah {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1rem;
+      background: var(--spruce);
+      color: #FFFFFF;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      border: 1px solid var(--spruce);
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.12s ease;
+    }
+
+    .btn-tambah:hover {
+      background: var(--spruce-light);
+    }
+
+    .filter-bar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 220px;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8125rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--spruce);
+    }
+
+    .select-filter {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8125rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--surface);
+      color: var(--text-main);
+      outline: none;
+    }
+
+    .table-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .spreadsheet-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8125rem;
+      text-align: left;
+    }
+
+    .spreadsheet-table th {
+      background: #F1F5F9;
+      color: #334155;
+      font-weight: 600;
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .spreadsheet-table td {
+      padding: 0.875rem 1rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .spreadsheet-table tr:hover {
+      background: #F8FAFC;
+    }
+
+    .tabular-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .badge-normal {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      background: var(--sage-muted);
+      color: var(--sage);
+      border: 1px solid rgba(78, 135, 82, 0.3);
+    }
+
+    .badge-stunted {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      background: var(--terracotta-muted);
+      color: var(--terracotta);
+      border: 1px solid rgba(200, 90, 50, 0.3);
+    }
+
+    .badge-severely {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      background: #FEE2E2;
+      color: #991B1B;
+      border: 1px solid rgba(153, 27, 27, 0.3);
+    }
+
+    .tag-faltering {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 0.625rem;
+      font-weight: 700;
+      background: var(--terracotta);
+      color: #FFFFFF;
+      margin-left: 4px;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal-card {
+      background: var(--surface);
+      border-radius: 6px;
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .modal-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--spruce);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.25rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+
+    .form-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .form-input, .form-select {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8125rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      outline: none;
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-color: var(--spruce);
+    }
+
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border);
+      background: #F8FAFC;
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+    }
+
+    .btn-cancel {
+      padding: 0.5rem 1rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+
+    .btn-save {
+      padding: 0.5rem 1.25rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      background: var(--spruce);
+      color: #FFFFFF;
+      border: 1px solid var(--spruce);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <%- include('partials/sidebar', { activeMenu: 'anak', user }) %>
+
+  <div class="main-wrapper">
+    <header class="topbar">
+      <div class="breadcrumb">
+        <span>Surveilans</span>
+        <span>/</span>
+        <span class="breadcrumb-active">Data Sasaran Balita</span>
+      </div>
+      <div>
+        <span class="tabular-num" style="font-size: 0.8125rem; color: var(--text-muted);">
+          Total Terdaftar: <strong><%= anakList.length %></strong> Balita
+        </span>
+      </div>
+    </header>
+
+    <main class="content-area">
+      <div class="page-header-row">
+        <div>
+          <h1 class="page-title">Data Sasaran Balita Wilayah</h1>
+          <p class="page-desc">Registrasi data kohort balita, riwayat antropometri, dan deteksi status gizi Kemenkes RI.</p>
+        </div>
+        <button type="button" class="btn-tambah" onclick="openModal()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          <span>Tambah Sasaran Balita</span>
+        </button>
+      </div>
+
+      <% if (typeof successMessage !== 'undefined' && successMessage) { %>
+        <div style="background: #EBF2EC; border: 1px solid var(--sage); color: var(--sage); padding: 0.75rem 1rem; border-radius: 4px; margin-bottom: 1.25rem; font-size: 0.8125rem;">
+          <%= successMessage %>
+        </div>
+      <% } %>
+
+      <div class="filter-bar">
+        <input type="text" id="searchInput" class="search-input" placeholder="Cari nama balita, NIK, atau nama ibu..." onkeyup="filterTable()">
+        <select id="genderFilter" class="select-filter" onchange="filterTable()">
+          <option value="">Semua Jenis Kelamin</option>
+          <option value="L">Laki-laki (L)</option>
+          <option value="P">Perempuan (P)</option>
+        </select>
+        <select id="statusFilter" class="select-filter" onchange="filterTable()">
+          <option value="">Semua Status Stunting</option>
+          <option value="Normal">Normal</option>
+          <option value="Stunted">Stunted</option>
+          <option value="Severely Stunted">Severely Stunted</option>
+        </select>
+      </div>
+
+      <div class="table-card">
+        <table class="spreadsheet-table" id="anakTable">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama Balita / NIK</th>
+              <th>JK</th>
+              <th>Tgl Lahir (Usia)</th>
+              <th>Nama Orang Tua</th>
+              <th>Domisili</th>
+              <th>Ukur Terakhir</th>
+              <th>Status TB/U (Stunting)</th>
+              <th>Growth Faltering</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (anakList.length === 0) { %>
+              <tr>
+                <td colspan="9" style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                  Belum ada data sasaran balita terdaftar.
+                </td>
+              </tr>
+            <% } else { %>
+              <% anakList.forEach((anak, idx) => { %>
+                <tr class="anak-row" 
+                    data-nama="<%= anak.nama_lengkap.toLowerCase() %>" 
+                    data-nik="<%= (anak.nik || '').toLowerCase() %>"
+                    data-ibu="<%= (anak.nama_ibu || '').toLowerCase() %>"
+                    data-gender="<%= anak.jenis_kelamin %>"
+                    data-status="<%= anak.status_stunting || 'Normal' %>">
+                  <td class="tabular-num"><%= idx + 1 %></td>
+                  <td>
+                    <div style="font-weight: 600; color: var(--spruce);"><%= anak.nama_lengkap %></div>
+                    <div class="tabular-num" style="font-size: 0.6875rem; color: var(--text-muted);"><%= anak.nik || 'NIK Belum Terdata' %></div>
+                  </td>
+                  <td>
+                    <span style="font-weight: 600; color: <%= anak.jenis_kelamin === 'L' ? '#0369A1' : '#BE185D' %>;">
+                      <%= anak.jenis_kelamin %>
+                    </span>
+                  </td>
+                  <td>
+                    <div class="tabular-num"><%= anak.tanggal_lahir %></div>
+                    <div style="font-size: 0.6875rem; color: var(--text-muted);"><%= anak.usiaBulan %> Bulan</div>
+                  </td>
+                  <td>
+                    <div>Ibu <%= anak.nama_ibu || '-' %></div>
+                    <div style="font-size: 0.6875rem; color: var(--text-muted);">Bpk <%= anak.nama_ayah || '-' %></div>
+                  </td>
+                  <td style="max-width: 180px; font-size: 0.75rem; color: var(--text-muted);">
+                    <%= anak.alamat_domisili || 'Wilayah Binaan' %>
+                  </td>
+                  <td>
+                    <% if (anak.berat_badan) { %>
+                      <div class="tabular-num">
+                        <strong><%= Number(anak.berat_badan).toFixed(2) %> kg</strong> / <%= Number(anak.tinggi_badan).toFixed(1) %> cm
+                      </div>
+                      <div class="tabular-num" style="font-size: 0.6875rem; color: var(--text-muted);">
+                        <%= anak.tanggal_ukur %>
+                      </div>
+                    <% } else { %>
+                      <span style="color: var(--text-muted); font-size: 0.75rem;">Belum Ditimbang</span>
+                    <% } %>
+                  </td>
+                  <td>
+                    <% if (!anak.status_stunting || anak.status_stunting === 'Normal') { %>
+                      <span class="badge-normal">Normal</span>
+                    <% } else if (anak.status_stunting === 'Stunted') { %>
+                      <span class="badge-stunted">Stunted</span>
+                    <% } else { %>
+                      <span class="badge-severely">Severely Stunted</span>
+                    <% } %>
+                    <% if (anak.zscore_tbu) { %>
+                      <div class="tabular-num" style="font-size: 0.6875rem; color: var(--text-muted); margin-top: 2px;">
+                        <%= Number(anak.zscore_tbu).toFixed(2) %> SD
+                      </div>
+                    <% } %>
+                  </td>
+                  <td>
+                    <% if (anak.indikasi_faltering === 1) { %>
+                      <span class="tag-faltering" style="margin-left: 0;">Faltering T/2T</span>
+                    <% } else { %>
+                      <span style="color: var(--sage); font-size: 0.75rem; font-weight: 500;">Pertumbuhan Aman</span>
+                    <% } %>
+                  </td>
+                </tr>
+              <% }) %>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="modalTambah">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 class="modal-title">Tambah Sasaran Balita Baru</h2>
+        <button type="button" class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <form action="/anak-web/tambah" method="POST">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label class="form-label">Nama Lengkap Balita *</label>
+              <input type="text" name="nama_lengkap" class="form-input" required placeholder="Contoh: Muhammad Rayyan">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">NIK Balita (16 digit)</label>
+              <input type="text" name="nik" class="form-input" maxlength="16" placeholder="350901xxxxxxxxxx">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Jenis Kelamin *</label>
+              <select name="jenis_kelamin" class="form-select" required>
+                <option value="L">Laki-laki (L)</option>
+                <option value="P">Perempuan (P)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Tanggal Lahir *</label>
+              <input type="date" name="tanggal_lahir" class="form-input" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Berat Lahir (kg)</label>
+              <input type="number" step="0.1" name="berat_lahir" class="form-input" placeholder="Contoh: 3.2">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Panjang Lahir (cm)</label>
+              <input type="number" step="0.1" name="panjang_lahir" class="form-input" placeholder="Contoh: 49.0">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Nama Ibu Kandung *</label>
+              <input type="text" name="nama_ibu" class="form-input" required placeholder="Nama Ibu">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Nama Ayah</label>
+              <input type="text" name="nama_ayah" class="form-input" placeholder="Nama Ayah">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">No. Kartu Keluarga (KK)</label>
+              <input type="text" name="no_kk" class="form-input" maxlength="16" placeholder="350901xxxxxxxxxx">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">No. Telepon / WhatsApp</label>
+              <input type="text" name="no_telepon" class="form-input" placeholder="08xxxxxxxxxx">
+            </div>
+
+            <div class="form-group full-width">
+              <label class="form-label">Alamat Domisili</label>
+              <input type="text" name="alamat_domisili" class="form-input" placeholder="Dusun, RT/RW, Desa">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-cancel" onclick="closeModal()">Batal</button>
+          <button type="submit" class="btn-save">Simpan Data Balita</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function openModal() {
+      document.getElementById('modalTambah').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('modalTambah').classList.remove('open');
+    }
+
+    function filterTable() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      const gender = document.getElementById('genderFilter').value;
+      const status = document.getElementById('statusFilter').value;
+
+      const rows = document.querySelectorAll('.anak-row');
+      rows.forEach(row => {
+        const nama = row.getAttribute('data-nama');
+        const nik = row.getAttribute('data-nik');
+        const ibu = row.getAttribute('data-ibu');
+        const rowGender = row.getAttribute('data-gender');
+        const rowStatus = row.getAttribute('data-status');
+
+        const matchSearch = nama.includes(q) || nik.includes(q) || ibu.includes(q);
+        const matchGender = !gender || rowGender === gender;
+        const matchStatus = !status || rowStatus === status;
+
+        if (matchSearch && matchGender && matchStatus) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

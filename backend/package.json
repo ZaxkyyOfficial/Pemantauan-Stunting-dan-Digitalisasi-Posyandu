@@ -1,0 +1,41 @@
+{
+  "name": "tumbuhsehat-backend",
+  "version": "1.0.0",
+  "description": "TumbuhSehat - Sistem Pemantauan Stunting dan Digitalisasi Posyandu (Backend API)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "seed": "node src/seeds/seedAdmin.js"
+  },
+  "keywords": [
+    "posyandu",
+    "stunting",
+    "who-zscore",
+    "antropometri"
+  ],
+  "author": "TumbuhSehat Team",
+  "license": "ISC",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.117.2",
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.8.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.2.0",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "exceljs": "^4.4.0",
+    "express": "^4.21.0",
+    "express-async-errors": "^3.1.1",
+    "express-rate-limit": "^8.7.0",
+    "groq-sdk": "^1.6.0",
+    "ioredis": "^6.0.0",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.12.1",
+    "mysql2": "^3.11.0",
+    "node-cache": "^5.1.2",
+    "pdfkit": "^0.20.2"
+  }
+}

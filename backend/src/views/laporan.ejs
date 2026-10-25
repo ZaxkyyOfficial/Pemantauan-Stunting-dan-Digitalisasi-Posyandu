@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --spruce: #0C2E28;
+      --spruce-light: #16433B;
+      --spruce-dark: #071C18;
+      --sage: #4E8752;
+      --sage-muted: #EBF2EC;
+      --terracotta: #C85A32;
+      --terracotta-muted: #FAECE7;
+      --bone: #F8FAFC;
+      --surface: #FFFFFF;
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --border: #E2E8F0;
+      --border-dark: #CBD5E1;
+      --sidebar-width: 260px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bone);
+      color: var(--text-main);
+      display: flex;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .sidebar {
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: var(--spruce);
+      position: fixed;
+      left: 0;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      z-index: 100;
+    }
+
+    .sidebar-header {
+      padding: 1.5rem 1.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .sidebar-logo {
+      width: 40px;
+      height: 40px;
+      max-width: 48px;
+      max-height: 48px;
+      object-fit: contain;
+    }
+
+    .sidebar-brand-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    .sidebar-brand-sub {
+      font-size: 0.6875rem;
+      color: #94A3B8;
+      letter-spacing: 0.02em;
+    }
+
+    .sidebar-section-title {
+      padding: 1.25rem 1.25rem 0.5rem;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      color: #64748B;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 0.25rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.625rem 0.75rem;
+      border-radius: 6px;
+      color: #CBD5E1;
+      text-decoration: none;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      transition: background-color 0.12s ease, color 0.12s ease;
+    }
+
+    .sidebar-link:hover {
+      background: var(--spruce-light);
+      color: #FFFFFF;
+    }
+
+    .sidebar-link.active {
+      background: #123C34;
+      color: #FFFFFF;
+      font-weight: 600;
+      border-left: 3px solid var(--sage);
+    }
+
+    .sidebar-link .nav-icon {
+      flex-shrink: 0;
+      color: #94A3B8;
+      transition: color 0.12s ease;
+    }
+
+    .sidebar-link:hover .nav-icon,
+    .sidebar-link.active .nav-icon {
+      color: #A7F3D0;
+    }
+
+    .sidebar-footer {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: var(--spruce-dark);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      background: #16433B;
+      color: #FFFFFF;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .user-details {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .user-name {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: #FFFFFF;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-role {
+      font-size: 0.6875rem;
+      color: #94A3B8;
+    }
+
+    .btn-logout {
+      display: block;
+      width: 100%;
+      padding: 0.45rem 0.5rem;
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #CBD5E1;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background-color 0.15s ease;
+    }
+
+    .btn-logout:hover {
+      background: rgba(200, 90, 50, 0.2);
+      border-color: var(--terracotta);
+      color: #FFFFFF;
+    }
+
+    .main-wrapper {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .top-bar {
+      height: 56px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+
+    .breadcrumb .sep { color: #CBD5E1; }
+    .breadcrumb .active { color: var(--spruce); font-weight: 600; }
+
+    .content-area {
+      padding: 1.75rem;
+      flex: 1;
+      max-width: 1440px;
+      width: 100%;
+    }
+
+    .page-heading {
+      margin-bottom: 1.5rem;
+    }
+
+    .page-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.375rem;
+      font-weight: 700;
+      color: var(--spruce);
+      letter-spacing: -0.02em;
+    }
+
+    .page-desc {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .filter-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .filter-panel-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--spruce);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .filter-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr auto;
+      gap: 1rem;
+      align-items: flex-end;
+    }
+
+    @media (max-width: 900px) {
+      .filter-form {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .form-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .form-select {
+      height: 38px;
+      padding: 0 0.75rem;
+      font-size: 0.8125rem;
+      font-family: 'Inter', sans-serif;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: #FFFFFF;
+      color: var(--text-main);
+      outline: none;
+    }
+
+    .form-select:focus {
+      border-color: var(--spruce);
+      box-shadow: 0 0 0 1px var(--spruce);
+    }
+
+    .btn-apply {
+      height: 38px;
+      padding: 0 1.25rem;
+      background: var(--spruce);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 4px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: background 0.15s;
+    }
+
+    .btn-apply:hover {
+      background: var(--spruce-light);
+    }
+
+    .export-actions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+
+    @media (max-width: 768px) {
+      .export-actions-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .action-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .action-info-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--spruce);
+    }
+
+    .action-info-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .btn-solid-excel {
+      background: var(--spruce);
+      color: #FFFFFF;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      padding: 0.625rem 1.25rem;
+      border-radius: 4px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .btn-solid-excel:hover {
+      background: var(--spruce-light);
+    }
+
+    .btn-solid-pdf {
+      background: var(--terracotta);
+      color: #FFFFFF;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      padding: 0.625rem 1.25rem;
+      border-radius: 4px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .btn-solid-pdf:hover {
+      background: #B04722;
+    }
+
+    .data-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 2rem;
+    }
+
+    .data-card-header {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .data-card-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      color: var(--spruce);
+    }
+
+    .data-card-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .table-container {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.8125rem;
+    }
+
+    th {
+      background: #F8FAFC;
+      color: var(--text-muted);
+      font-weight: 600;
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-main);
+      vertical-align: middle;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tbody tr:hover { background-color: #F8FAFC; }
+
+    .tnum {
+      font-family: 'JetBrains Mono', monospace;
+      font-feature-settings: "tnum";
+      font-variant-numeric: tabular-nums;
+    }
+
+    .badge-status {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+      white-space: nowrap;
+    }
+
+    .badge-severely {
+      background: var(--terracotta-muted);
+      color: var(--terracotta);
+      border: 1px solid rgba(200, 90, 50, 0.3);
+    }
+
+    .badge-stunted {
+      background: #FEF3C7;
+      color: #D97706;
+      border: 1px solid rgba(217, 119, 6, 0.3);
+    }
+
+    .badge-faltering {
+      background: var(--terracotta-muted);
+      color: var(--terracotta);
+      border: 1px solid rgba(200, 90, 50, 0.3);
+    }
+
+    .badge-normal {
+      background: var(--sage-muted);
+      color: var(--sage);
+      border: 1px solid rgba(78, 135, 82, 0.3);
+    }
+
+    .spin {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <%- include('partials/sidebar', { activeMenu: 'laporan', user }) %>
+
+  <div class="main-wrapper">
+
+    <header class="top-bar" role="banner">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <span>Puskesmas Dringu</span>
+        <span class="sep">/</span>
+        <span>Wilayah Kecamatan Dringu</span>
+        <span class="sep">/</span>
+        <span class="active">Pusat Ekspor Laporan e-PPGBM</span>
+      </nav>
+
+      <div>
+        <a href="/dashboard" style="font-size:0.8125rem; color:var(--spruce); font-weight:600; text-decoration:none;">
+          &larr; Kembali ke Ringkasan Wilayah
+        </a>
+      </div>
+    </header>
+
+    <main class="content-area" role="main">
+
+      <div class="page-heading">
+        <h1 class="page-title">Pusat Ekspor &amp; Rekapitulasi Laporan e-PPGBM</h1>
+        <p class="page-desc">Unduh rekapitulasi data surveilans gizi balita berstandar baku Kementerian Kesehatan RI dan dokumen resmi Puskesmas Dringu.</p>
+      </div>
+
+      <section class="filter-panel" aria-label="Filter Laporan">
+        <div class="filter-panel-title">Parameter Filter Dokumen</div>
+        <form method="GET" action="/laporan-web" class="filter-form">
+          
+          <div class="form-group">
+            <label class="form-label" for="filterPeriode">Periode Pengukuran (Bulan &amp; Tahun)</label>
+            <select name="periode" id="filterPeriode" class="form-select">
+              <option value="2026-09" <%= selectedPeriode === '2026-09' ? 'selected' : '' %>>September 2026</option>
+              <option value="2026-08" <%= selectedPeriode === '2026-08' ? 'selected' : '' %>>Agustus 2026</option>
+              <option value="2026-07" <%= selectedPeriode === '2026-07' ? 'selected' : '' %>>Juli 2026</option>
+              <option value="2026-06" <%= selectedPeriode === '2026-06' ? 'selected' : '' %>>Juni 2026</option>
+              <option value="2026-05" <%= selectedPeriode === '2026-05' ? 'selected' : '' %>>Mei 2026</option>
+              <option value="2026-04" <%= selectedPeriode === '2026-04' ? 'selected' : '' %>>April 2026</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="filterPosyandu">Wilayah / Posyandu Binaan</label>
+            <select name="posyandu_id" id="filterPosyandu" class="form-select" <%= isKader ? 'disabled' : '' %>>
+              <% if (!isKader) { %>
+                <option value="" <%= (!selectedPosyanduId) ? 'selected' : '' %>>Semua Posyandu (Agregat)</option>
+              <% } %>
+              <% if (posyanduList && posyanduList.length > 0) { %>
+                <% posyanduList.forEach(p => { %>
+                  <% if (isKader && user.posyandu_id && user.posyandu_id !== p.id) { return; } %>
+                  <option value="<%= p.id %>" <%= (selectedPosyanduId == p.id) ? 'selected' : '' %>>
+                    <%= p.nama_posyandu %>
+                  </option>
+                <% }); %>
+              <% } %>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="filterKategori">Kategori Status Gizi</label>
+            <select name="kategori" id="filterKategori" class="form-select">
+              <option value="semua" <%= selectedKategori === 'semua' ? 'selected' : '' %>>Semua Status Gizi</option>
+              <option value="stunting" <%= selectedKategori === 'stunting' ? 'selected' : '' %>>Stunting Saja (Stunted &amp; Severely)</option>
+              <option value="faltering" <%= selectedKategori === 'faltering' ? 'selected' : '' %>>Growth Faltering Saja (T/2T)</option>
+            </select>
+          </div>
+
+          <div>
+            <button type="submit" class="btn-apply">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+              </svg>
+              Terapkan Filter
+            </button>
+          </div>
+
+        </form>
+      </section>
+
+      <%
+        const exportQueryParams = `posyandu_id=${selectedPosyanduId || ''}&periode=${selectedPeriode || ''}&kategori=${selectedKategori || ''}`;
+      %>
+      <section class="export-actions-grid" aria-label="Aksi Ekspor Dokumen">
+        
+        <article class="action-card">
+          <div>
+            <div class="action-info-title">Format e-PPGBM Kemenkes (.xlsx)</div>
+            <div class="action-info-desc">Format tabular lengkap sesuai standar integrasi data elektronik gizi Kementerian Kesehatan RI.</div>
+          </div>
+          <a href="/api/v1/laporan/export-excel?<%= exportQueryParams %>" id="btnExcel" class="btn-solid-excel">
+            <svg id="iconExcel" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" x2="12" y1="15" y2="3"/>
+            </svg>
+            <span id="textExcel">Ekspor Excel (.xlsx)</span>
+          </a>
+        </article>
+
+        <article class="action-card">
+          <div>
+            <div class="action-info-title">Dokumen Berita Acara Rekapitulasi (.pdf)</div>
+            <div class="action-info-desc">Dokumen formal berformat cetak dengan kop resmi Puskesmas Dringu, rekap metrik, dan pengesahan dokter.</div>
+          </div>
+          <a href="/api/v1/laporan/export-pdf?<%= exportQueryParams %>" id="btnPdf" class="btn-solid-pdf">
+            <svg id="iconPdf" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" x2="8" y1="13" y2="13"/>
+              <line x1="16" x2="8" y1="17" y2="17"/>
+              <polyline points="10 9 9 9 8 9"/>
+            </svg>
+            <span id="textPdf">Cetak Dokumen PDF (.pdf)</span>
+          </a>
+        </article>
+
+      </section>
+
+      <section class="data-card" aria-label="Pratinjau Data Laporan">
+        <div class="data-card-header">
+          <div>
+            <h2 class="data-card-title">Pratinjau Rekapitulasi Sasaran Balita (10 Baris Teratas)</h2>
+            <p class="data-card-sub">Menampilkan sampel data sebelum berkas diunduh dalam format resmi.</p>
+          </div>
+          <span class="tnum" style="font-size:0.75rem; color:var(--text-muted);">
+            Ditemukan <%= totalMatch %> sasaran balita sesuai filter
+          </span>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>NIK (Masking)</th>
+                <th>Nama Balita</th>
+                <th>Posyandu</th>
+                <th>Tanggal Ukur</th>
+                <th>BB (kg)</th>
+                <th>TB (cm)</th>
+                <th>Z-Score (BB/U, TB/U, BB/TB)</th>
+                <th>Status Intervensi Gizi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (previewList && previewList.length > 0) { %>
+                <% previewList.forEach((b, idx) => { %>
+                  <tr>
+                    <td class="tnum"><%= idx + 1 %></td>
+                    <td class="tnum" style="font-size:0.75rem; color:var(--text-muted);"><%= b.nikMasked || '-' %></td>
+                    <td>
+                      <div style="font-weight:600;"><%= b.nama_lengkap %></div>
+                      <div style="font-size:0.6875rem; color:var(--text-muted);"><%= b.jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' %>, <%= b.usiaBulan %> bln</div>
+                    </td>
+                    <td>
+                      <span style="font-weight:500;"><%= b.nama_posyandu || '-' %></span>
+                    </td>
+                    <td class="tnum" style="font-size:0.75rem;"><%= b.tanggal_ukur || '-' %></td>
+                    <td class="tnum">
+                      <strong><%= Number(b.berat_badan || 0).toFixed(2) %></strong> kg
+                    </td>
+                    <td class="tnum">
+                      <strong><%= Number(b.tinggi_badan || 0).toFixed(1) %></strong> cm
+                    </td>
+                    <td class="tnum" style="font-size:0.75rem;">
+                      <div>BB/U: <%= b.zscore_bbu !== null && b.zscore_bbu !== undefined ? Number(b.zscore_bbu).toFixed(2) : '-' %> SD</div>
+                      <div>TB/U: <strong><%= b.zscore_tbu !== null && b.zscore_tbu !== undefined ? Number(b.zscore_tbu).toFixed(2) : '-' %> SD</strong></div>
+                      <div>BB/TB: <%= b.zscore_bbtb !== null && b.zscore_bbtb !== undefined ? Number(b.zscore_bbtb).toFixed(2) : '-' %> SD</div>
+                    </td>
+                    <td>
+                      <span class="badge-status <%= b.intervensiBadge || 'badge-normal' %>">
+                        <%= b.intervensiGizi || 'Pemantauan Rutin' %>
+                      </span>
+                    </td>
+                  </tr>
+                <% }); %>
+              <% } else { %>
+                <tr>
+                  <td colspan="9" style="text-align:center; padding:2rem; color:var(--text-muted);">
+                    Tidak ditemukan data sasaran balita pada kombinasi filter yang dipilih.
+                  </td>
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+
+        <div style="padding: 0.875rem 1.25rem; background: #F8FAFC; border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--text-muted); display:flex; justify-content:space-between; align-items:center;">
+          <span>Catatan: Pratinjau di atas menampilkan maksimal 10 baris. Seluruh data (<%= totalMatch %> baris) akan terangkum lengkap pada berkas unduhan Excel (.xlsx) atau PDF.</span>
+          <span class="tnum">Standar e-PPGBM Puskesmas Dringu 2026</span>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const btnExcel = document.getElementById('btnExcel');
+      const textExcel = document.getElementById('textExcel');
+      const iconExcel = document.getElementById('iconExcel');
+
+      const btnPdf = document.getElementById('btnPdf');
+      const textPdf = document.getElementById('textPdf');
+      const iconPdf = document.getElementById('iconPdf');
+
+      if (btnExcel) {
+        btnExcel.addEventListener('click', function() {
+          const originalText = textExcel.textContent;
+          textExcel.textContent = 'Menyiapkan Excel...';
+          iconExcel.classList.add('spin');
+          setTimeout(function() {
+            textExcel.textContent = originalText;
+            iconExcel.classList.remove('spin');
+          }, 3500);
+        });
+      }
+
+      if (btnPdf) {
+        btnPdf.addEventListener('click', function() {
+          const originalText = textPdf.textContent;
+          textPdf.textContent = 'Menyiapkan PDF...';
+          iconPdf.classList.add('spin');
+          setTimeout(function() {
+            textPdf.textContent = originalText;
+            iconPdf.classList.remove('spin');
+          }, 3500);
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
