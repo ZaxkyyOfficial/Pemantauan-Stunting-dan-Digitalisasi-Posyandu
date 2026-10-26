@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/radius_md"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/card_border"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvNamaResep"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/spruce"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                tools:text="Bubur Singkong Kembung Kuning" />
+
+            <TextView
+                android:id="@+id/tvKategoriUsia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_chip_normal"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="3dp"
+                android:textColor="@color/sage"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                tools:text="6-8 Bulan" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvDeskripsi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/on_surface_variant"
+            android:textSize="12sp"
+            tools:text="Kombinasi karbohidrat kompleks singkong kukus dengan asam lemak omega-3 dan protein tinggi dari ikan kembung segar lokal." />
+
+        <!-- Takaran Gizi Badges: Swiss Clinical Minimalist -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvKalori"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_surface_container"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:textColor="@color/slate_dark"
+                android:textSize="11sp"
+                android:fontFamily="monospace"
+                tools:text="165 kkal" />
+
+            <TextView
+                android:id="@+id/tvProtein"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/bg_surface_container"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:textColor="@color/sage"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:fontFamily="monospace"
+                tools:text="7.8 g protein" />
+
+            <TextView
+                android:id="@+id/tvZatBesi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/bg_surface_container"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:textColor="@color/terracotta"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:fontFamily="monospace"
+                tools:text="1.9 mg Fe" />
+        </LinearLayout>
+
+        <!-- Estimasi Biaya Porsi Lokal -->
+        <TextView
+            android:id="@+id/tvEstimasiBiaya"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/spruce"
+            android:textSize="11.5sp"
+            android:textStyle="bold"
+            tools:text="Estimasi Biaya: Rp 4.500 / porsi" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="8dp"
+            android:background="@color/divider" />
+
+        <TextView
+            android:id="@+id/tvCaraOlah"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/on_surface_variant"
+            android:textSize="11.5sp"
+            android:lineSpacingExtra="2dp"
+            tools:text="Kukus singkong dan suwir halus daging ikan kembung rebus, lumatkan bersama kaldu sayur hingga bertekstur semi-cair lembut." />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

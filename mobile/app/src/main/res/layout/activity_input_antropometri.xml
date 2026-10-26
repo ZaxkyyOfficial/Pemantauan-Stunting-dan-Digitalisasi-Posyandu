@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/matte_bone"
+    tools:context=".ui.pengukuran.InputAntropometriActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Toolbar Swiss-Style: Flat, Solid 1px Border Bottom -->
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            app:title="@string/title_input_antropometri"
+            app:titleTextColor="@color/spruce"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:navigationIconTint="@color/spruce"
+            app:elevation="0dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/card_border" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/screen_margin">
+
+            <!-- Pilih Balita -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pilih_anak"
+                android:textColor="@color/spruce"
+                android:textSize="@dimen/text_label_md"
+                android:textStyle="bold"
+                android:letterSpacing="0.05"
+                android:layout_marginBottom="@dimen/space_sm" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilPilihAnak"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_md"
+                app:boxStrokeColor="@color/spruce"
+                app:boxCornerRadiusTopStart="@dimen/radius_md"
+                app:boxCornerRadiusTopEnd="@dimen/radius_md"
+                app:boxCornerRadiusBottomStart="@dimen/radius_md"
+                app:boxCornerRadiusBottomEnd="@dimen/radius_md">
+
+                <AutoCompleteTextView
+                    android:id="@+id/actvPilihAnak"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:hint="Pilih sasaran balita..."
+                    android:textColor="@color/on_surface"
+                    android:textSize="@dimen/text_body_md"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Tanggal Ukur -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_tanggal_ukur"
+                android:textColor="@color/spruce"
+                android:textSize="@dimen/text_label_md"
+                android:textStyle="bold"
+                android:letterSpacing="0.05"
+                android:layout_marginBottom="@dimen/space_sm" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_lg"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_calendar"
+                app:endIconTint="@color/spruce"
+                app:boxCornerRadiusTopStart="@dimen/radius_md"
+                app:boxCornerRadiusTopEnd="@dimen/radius_md"
+                app:boxCornerRadiusBottomStart="@dimen/radius_md"
+                app:boxCornerRadiusBottomEnd="@dimen/radius_md">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etTanggalUkur"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:textColor="@color/on_surface"
+                    android:textSize="@dimen/text_body_md"
+                    android:fontFamily="monospace"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp"
+                    tools:text="2026-09-22" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- SECTION: Tactile Antropometri Stepper Inputs -->
+
+            <!-- 1. Berat Badan -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_md"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/card_border"
+                app:cardCornerRadius="@dimen/radius_md"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/space_md">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/space_sm">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="BERAT BADAN (BB)"
+                            android:textColor="@color/spruce"
+                            android:textSize="@dimen/text_label_md"
+                            android:textStyle="bold"
+                            android:letterSpacing="0.05" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Satuan: Kilogram (kg)"
+                            android:textColor="@color/on_surface_variant"
+                            android:textSize="@dimen/text_label_sm" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnBbMinus"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:minWidth="48dp"
+                            android:minHeight="48dp"
+                            android:padding="0dp"
+                            android:text="-"
+                            android:textSize="20sp"
+                            android:textColor="@color/spruce"
+                            android:textStyle="bold"
+                            app:strokeColor="@color/card_border"
+                            app:strokeWidth="1dp"
+                            app:cornerRadius="@dimen/radius_md"
+                            app:backgroundTint="@color/matte_bone" />
+
+                        <EditText
+                            android:id="@+id/etBeratBadan"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_weight="1"
+                            android:layout_marginStart="@dimen/space_sm"
+                            android:layout_marginEnd="@dimen/space_sm"
+                            android:background="@drawable/bg_input_box"
+                            android:fontFamily="monospace"
+                            android:gravity="center"
+                            android:hint="0.00"
+                            android:inputType="numberDecimal"
+                            android:textColor="@color/spruce"
+                            android:textColorHint="@color/text_hint"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnBbPlus"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:minWidth="48dp"
+                            android:minHeight="48dp"
+                            android:padding="0dp"
+                            android:text="+"
+                            android:textSize="20sp"
+                            android:textColor="@color/spruce"
+                            android:textStyle="bold"
+                            app:strokeColor="@color/card_border"
+                            app:strokeWidth="1dp"
+                            app:cornerRadius="@dimen/radius_md"
+                            app:backgroundTint="@color/matte_bone" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 2. Panjang / Tinggi Badan -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_md"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/card_border"
+                app:cardCornerRadius="@dimen/radius_md"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/space_md">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/space_sm">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="TINGGI / PANJANG BADAN (TB/PB)"
+                            android:textColor="@color/spruce"
+                            android:textSize="@dimen/text_label_md"
+                            android:textStyle="bold"
+                            android:letterSpacing="0.05" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Satuan: Sentimeter (cm)"
+                            android:textColor="@color/on_surface_variant"
+                            android:textSize="@dimen/text_label_sm" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnTbMinus"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:minWidth="48dp"
+                            android:minHeight="48dp"
+                            android:padding="0dp"
+                            android:text="-"
+                            android:textSize="20sp"
+                            android:textColor="@color/spruce"
+                            android:textStyle="bold"
+                            app:strokeColor="@color/card_border"
+                            app:strokeWidth="1dp"
+                            app:cornerRadius="@dimen/radius_md"
+                            app:backgroundTint="@color/matte_bone" />
+
+                        <EditText
+                            android:id="@+id/etTinggiBadan"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_weight="1"
+                            android:layout_marginStart="@dimen/space_sm"
+                            android:layout_marginEnd="@dimen/space_sm"
+                            android:background="@drawable/bg_input_box"
+                            android:fontFamily="monospace"
+                            android:gravity="center"
+                            android:hint="0.0"
+                            android:inputType="numberDecimal"
+                            android:textColor="@color/spruce"
+                            android:textColorHint="@color/text_hint"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnTbPlus"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:minWidth="48dp"
+                            android:minHeight="48dp"
+                            android:padding="0dp"
+                            android:text="+"
+                            android:textSize="20sp"
+                            android:textColor="@color/spruce"
+                            android:textStyle="bold"
+                            app:strokeColor="@color/card_border"
+                            app:strokeWidth="1dp"
+                            app:cornerRadius="@dimen/radius_md"
+                            app:backgroundTint="@color/matte_bone" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- 3. Lingkar Kepala (Opsional) -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_lg"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/card_border"
+                app:cardCornerRadius="@dimen/radius_md"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/space_md">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/space_sm">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="LINGKAR KEPALA (LK)"
+                            android:textColor="@color/spruce"
+                            android:textSize="@dimen/text_label_md"
+                            android:textStyle="bold"
+                            android:letterSpacing="0.05" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Satuan: Sentimeter (cm)"
+                            android:textColor="@color/on_surface_variant"
+                            android:textSize="@dimen/text_label_sm" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnLkMinus"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:minWidth="48dp"
+                            android:minHeight="48dp"
+                            android:padding="0dp"
+                            android:text="-"
+                            android:textSize="20sp"
+                            android:textColor="@color/spruce"
+                            android:textStyle="bold"
+                            app:strokeColor="@color/card_border"
+                            app:strokeWidth="1dp"
+                            app:cornerRadius="@dimen/radius_md"
+                            app:backgroundTint="@color/matte_bone" />
+
+                        <EditText
+                            android:id="@+id/etLingkarKepala"
+                            android:layout_width="0dp"
+                            android:layout_height="52dp"
+                            android:layout_weight="1"
+                            android:layout_marginStart="@dimen/space_sm"
+                            android:layout_marginEnd="@dimen/space_sm"
+                            android:background="@drawable/bg_input_box"
+                            android:fontFamily="monospace"
+                            android:gravity="center"
+                            android:hint="0.0"
+                            android:inputType="numberDecimal"
+                            android:textColor="@color/spruce"
+                            android:textColorHint="@color/text_hint"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnLkPlus"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:minWidth="48dp"
+                            android:minHeight="48dp"
+                            android:padding="0dp"
+                            android:text="+"
+                            android:textSize="20sp"
+                            android:textColor="@color/spruce"
+                            android:textStyle="bold"
+                            app:strokeColor="@color/card_border"
+                            app:strokeWidth="1dp"
+                            app:cornerRadius="@dimen/radius_md"
+                            app:backgroundTint="@color/matte_bone" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- SECTION: Panel Hasil Z-Score Box-Cox LMS Instan -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardHasilAnalisis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_lg"
+                android:visibility="gone"
+                app:cardElevation="0dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/card_border"
+                app:cardCornerRadius="@dimen/radius_md"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/card_padding">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/space_md">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="ANALISIS Z-SCORE BOX-COX LMS"
+                            android:textColor="@color/spruce"
+                            android:textSize="@dimen/text_label_md"
+                            android:textStyle="bold"
+                            android:letterSpacing="0.05" />
+
+                        <TextView
+                            android:id="@+id/tvUsiaAnalisis"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/on_surface_variant"
+                            android:textSize="@dimen/text_label_sm"
+                            android:fontFamily="monospace"
+                            tools:text="Usia: 18 Bln" />
+                    </LinearLayout>
+
+                    <!-- 3 Flat Medical Columns -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:baselineAligned="false">
+
+                        <!-- Column 1: BB/U -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardBbu"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="4dp"
+                            app:cardElevation="0dp"
+                            app:strokeWidth="1dp"
+                            app:strokeColor="@color/card_border"
+                            app:cardCornerRadius="@dimen/radius_sm"
+                            app:cardBackgroundColor="@color/matte_bone">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="10dp"
+                                android:gravity="center">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="BB / U"
+                                    android:textColor="@color/spruce"
+                                    android:textSize="@dimen/text_label_sm"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvZscoreBbu"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/spruce"
+                                    android:textSize="17sp"
+                                    android:textStyle="bold"
+                                    android:fontFamily="monospace"
+                                    android:layout_marginTop="2dp"
+                                    android:layout_marginBottom="2dp"
+                                    tools:text="-1.82 SD" />
+
+                                <TextView
+                                    android:id="@+id/tvStatusGizi"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/sage"
+                                    android:textSize="11sp"
+                                    android:textStyle="bold"
+                                    tools:text="Normal" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- Column 2: TB/U -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardTbu"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
+                            app:cardElevation="0dp"
+                            app:strokeWidth="1dp"
+                            app:strokeColor="@color/card_border"
+                            app:cardCornerRadius="@dimen/radius_sm"
+                            app:cardBackgroundColor="@color/matte_bone">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="10dp"
+                                android:gravity="center">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="TB / U"
+                                    android:textColor="@color/spruce"
+                                    android:textSize="@dimen/text_label_sm"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvZscoreTbu"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/spruce"
+                                    android:textSize="17sp"
+                                    android:textStyle="bold"
+                                    android:fontFamily="monospace"
+                                    android:layout_marginTop="2dp"
+                                    android:layout_marginBottom="2dp"
+                                    tools:text="-2.35 SD" />
+
+                                <TextView
+                                    android:id="@+id/tvStatusStunting"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/terracotta"
+                                    android:textSize="11sp"
+                                    android:textStyle="bold"
+                                    tools:text="Pendek" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- Column 3: BB/TB -->
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardBbtb"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="4dp"
+                            app:cardElevation="0dp"
+                            app:strokeWidth="1dp"
+                            app:strokeColor="@color/card_border"
+                            app:cardCornerRadius="@dimen/radius_sm"
+                            app:cardBackgroundColor="@color/matte_bone">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:padding="10dp"
+                                android:gravity="center">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="BB / TB"
+                                    android:textColor="@color/spruce"
+                                    android:textSize="@dimen/text_label_sm"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/tvZscoreBbtb"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/spruce"
+                                    android:textSize="17sp"
+                                    android:textStyle="bold"
+                                    android:fontFamily="monospace"
+                                    android:layout_marginTop="2dp"
+                                    android:layout_marginBottom="2dp"
+                                    tools:text="-1.10 SD" />
+
+                                <TextView
+                                    android:id="@+id/tvStatusWasting"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/sage"
+                                    android:textSize="11sp"
+                                    android:textStyle="bold"
+                                    tools:text="Gizi Baik" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
+
+                    <!-- Peringatan Growth Faltering T/2T (Flat Terracotta Card) -->
+                    <LinearLayout
+                        android:id="@+id/layoutFalteringAlert"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:background="@drawable/bg_faltering_alert_card"
+                        android:padding="12dp"
+                        android:layout_marginTop="@dimen/space_md"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="PERINGATAN GROWTH FALTERING (T/2T)"
+                            android:textColor="@color/terracotta"
+                            android:textSize="@dimen/text_label_sm"
+                            android:textStyle="bold"
+                            android:letterSpacing="0.05" />
+
+                        <TextView
+                            android:id="@+id/tvFalteringDetail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:textColor="@color/slate_dark"
+                            android:textSize="@dimen/text_body_md"
+                            tools:text="Berat badan tidak naik dari penimbangan sebelumnya." />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Tombol Simpan ke Antrean Lokal (Room DB) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSimpanHitung"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:minHeight="48dp"
+                android:text="@string/simpan_antrean_lokal"
+                android:textSize="@dimen/text_body_lg"
+                android:textStyle="bold"
+                app:backgroundTint="@color/spruce"
+                app:cornerRadius="@dimen/radius_md"
+                app:elevation="0dp"
+                android:layout_marginBottom="@dimen/space_xl" />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

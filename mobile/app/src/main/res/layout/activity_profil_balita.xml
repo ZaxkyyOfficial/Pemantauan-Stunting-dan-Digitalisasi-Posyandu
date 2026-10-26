@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".ui.profil.ProfilBalitaActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="64dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- ═══ TOOLBAR ═══ -->
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/white"
+                app:title="@string/title_profil_balita"
+                app:titleTextColor="@color/on_surface"
+                app:navigationIcon="@drawable/ic_arrow_back"
+                app:navigationIconTint="@color/on_surface"
+                app:elevation="2dp" />
+
+            <!-- ═══ IDENTITAS ANAK ═══ -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/screen_margin"
+                app:cardCornerRadius="@dimen/radius_lg"
+                app:cardElevation="@dimen/elevation_card"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/card_border"
+                app:cardBackgroundColor="@color/card_surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/card_padding">
+
+                    <!-- Header: Avatar + Nama -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/space_md">
+
+                        <!-- Avatar Circle -->
+                        <FrameLayout
+                            android:layout_width="@dimen/avatar_size_lg"
+                            android:layout_height="@dimen/avatar_size_lg"
+                            android:layout_marginEnd="@dimen/space_md">
+
+                            <TextView
+                                android:id="@+id/tvAvatarInitial"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:background="@drawable/bg_avatar_circle"
+                                android:textColor="@color/primary"
+                                android:textSize="@dimen/text_headline_md"
+                                android:textStyle="bold"
+                                tools:text="SA" />
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center_vertical">
+
+                                <TextView
+                                    android:id="@+id/tvNamaAnak"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/on_surface"
+                                    android:textSize="@dimen/text_headline_sm"
+                                    android:textStyle="bold"
+                                    tools:text="Siti Aminah" />
+
+                                <TextView
+                                    android:id="@+id/tvGenderBadge"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="20dp"
+                                    android:gravity="center"
+                                    android:layout_marginStart="@dimen/space_sm"
+                                    android:paddingStart="6dp"
+                                    android:paddingEnd="6dp"
+                                    android:background="@drawable/bg_chip_normal"
+                                    android:textSize="@dimen/text_label_sm"
+                                    tools:text="♀ Perempuan" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tvSubInfo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/on_surface_variant"
+                                android:textSize="@dimen/text_body_sm"
+                                tools:text="Anak ke-2 • Antrean #14 • Buku KIA Aktif" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Bio Metrics Grid (1:1:1:1 weight, uniform height 64dp, solid 1dp border) -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="@dimen/space_md">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="72dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:background="@drawable/bg_metric_box_white"
+                            android:padding="4dp"
+                            android:layout_marginEnd="4dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/label_usia"
+                                android:textColor="@color/on_surface_variant"
+                                android:textSize="10sp"
+                                android:maxLines="1"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/tvUsia"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/on_surface"
+                                android:textSize="12sp"
+                                android:fontFamily="sans-serif-medium"
+                                android:textStyle="bold"
+                                android:maxLines="1"
+                                app:autoSizeTextType="uniform"
+                                app:autoSizeMinTextSize="9sp"
+                                app:autoSizeMaxTextSize="13sp"
+                                tools:text="18 Bln" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="72dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:background="@drawable/bg_metric_box_white"
+                            android:padding="4dp"
+                            android:layout_marginEnd="4dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/label_tgl_lahir"
+                                android:textColor="@color/on_surface_variant"
+                                android:textSize="10sp"
+                                android:maxLines="1"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/tvTglLahir"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/on_surface"
+                                android:textSize="12sp"
+                                android:fontFamily="monospace"
+                                android:textStyle="bold"
+                                android:maxLines="1"
+                                app:autoSizeTextType="uniform"
+                                app:autoSizeMinTextSize="8sp"
+                                app:autoSizeMaxTextSize="12sp"
+                                tools:text="15-07-2025" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="72dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:background="@drawable/bg_metric_box_white"
+                            android:padding="4dp"
+                            android:layout_marginEnd="4dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/label_bb_lahir"
+                                android:textColor="@color/on_surface_variant"
+                                android:textSize="10sp"
+                                android:maxLines="1"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/tvBBLahir"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/on_surface"
+                                android:textSize="12sp"
+                                android:fontFamily="monospace"
+                                android:textStyle="bold"
+                                android:maxLines="1"
+                                app:autoSizeTextType="uniform"
+                                app:autoSizeMinTextSize="8sp"
+                                app:autoSizeMaxTextSize="12sp"
+                                tools:text="3.10 kg" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="72dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:background="@drawable/bg_metric_box_white"
+                            android:padding="4dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/label_pb_lahir"
+                                android:textColor="@color/on_surface_variant"
+                                android:textSize="10sp"
+                                android:maxLines="1"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/tvPBLahir"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/on_surface"
+                                android:textSize="12sp"
+                                android:fontFamily="monospace"
+                                android:textStyle="bold"
+                                android:maxLines="1"
+                                app:autoSizeTextType="uniform"
+                                app:autoSizeMinTextSize="8sp"
+                                app:autoSizeMaxTextSize="12sp"
+                                tools:text="49.0 cm" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- NIK & Orangtua -->
+                    <TextView
+                        android:id="@+id/tvNik"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/on_surface_variant"
+                        android:textSize="@dimen/text_body_sm"
+                        tools:text="NIK: 3513••••••••0001" />
+
+                    <TextView
+                        android:id="@+id/tvOrangtua"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/on_surface_variant"
+                        android:textSize="@dimen/text_body_sm"
+                        android:layout_marginBottom="@dimen/space_sm"
+                        tools:text="Ibu: Nurhayati • Ayah: Hendra W." />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ═══ STATUS GIZI TERKINI ═══ -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/screen_margin"
+                android:layout_marginEnd="@dimen/screen_margin"
+                android:layout_marginBottom="@dimen/screen_margin"
+                app:cardCornerRadius="@dimen/radius_lg"
+                app:cardElevation="@dimen/elevation_card"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/card_border"
+                app:cardBackgroundColor="@color/card_surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/card_padding">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/space_sm">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/status_gizi_terkini"
+                                android:textColor="@color/on_surface"
+                                android:textSize="@dimen/text_headline_sm"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/tvPenimbanganTerakhir"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/on_surface_variant"
+                                android:textSize="@dimen/text_body_sm"
+                                tools:text="Penimbangan 21 Sep 2026 (Usia 18 Bln)" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tvStatusBadge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minHeight="28dp"
+                            android:gravity="center"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="4dp"
+                            android:background="@drawable/bg_chip_danger"
+                            android:textColor="@color/chip_danger_text"
+                            android:textSize="@dimen/text_label_sm"
+                            android:textStyle="bold"
+                            tools:text="FALTERING ALERT" />
+                    </LinearLayout>
+
+                    <!-- Z-Score Grid: 3 columns with vertical dividers and separated rows -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/space_md">
+
+                        <!-- Column 1: TB / U (Stunting) -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:paddingHorizontal="4dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="TB / U"
+                                android:textColor="@color/on_surface_variant"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="(Stunting)"
+                                android:textColor="@color/on_surface_variant"
+                                android:textSize="10sp" />
+                            <TextView
+                                android:id="@+id/tvProfilZscoreTbu"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:gravity="center"
+                                android:fontFamily="monospace"
+                                android:textSize="15sp"
+                                android:maxLines="1"
+                                android:textStyle="bold"
+                                tools:text="-2.35 SD" />
+                            <TextView
+                                android:id="@+id/tvProfilStatusTbu"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:gravity="center"
+                                android:textAlignment="center"
+                                android:textSize="11sp"
+                                android:maxLines="2"
+                                tools:text="Pendek (Stunted)" />
+                        </LinearLayout>
+
+                        <!-- Vertical Divider 1 -->
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="80dp"
+                            android:background="@color/card_border" />
+
+                        <!-- Column 2: BB / U (Berat) -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:paddingHorizontal="4dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="BB / U"
+                                android:textColor="@color/on_surface_variant"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="(Berat)"
+                                android:textColor="@color/on_surface_variant"
+                                android:textSize="10sp" />
+                            <TextView
+                                android:id="@+id/tvProfilZscoreBbu"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:gravity="center"
+                                android:fontFamily="monospace"
+                                android:textSize="15sp"
+                                android:maxLines="1"
+                                android:textStyle="bold"
+                                tools:text="-1.82 SD" />
+                            <TextView
+                                android:id="@+id/tvProfilStatusBbu"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:gravity="center"
+                                android:textAlignment="center"
+                                android:textSize="11sp"
+                                android:maxLines="2"
+                                tools:text="Normal / Cukup" />
+                        </LinearLayout>
+
+                        <!-- Vertical Divider 2 -->
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="80dp"
+                            android:background="@color/card_border" />
+
+                        <!-- Column 3: BB / TB (Wasting) -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:paddingHorizontal="4dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="BB / TB"
+                                android:textColor="@color/on_surface_variant"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="(Wasting)"
+                                android:textColor="@color/on_surface_variant"
+                                android:textSize="10sp" />
+                            <TextView
+                                android:id="@+id/tvProfilZscoreBbtb"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:gravity="center"
+                                android:fontFamily="monospace"
+                                android:textSize="15sp"
+                                android:maxLines="1"
+                                android:textStyle="bold"
+                                tools:text="-1.10 SD" />
+                            <TextView
+                                android:id="@+id/tvProfilStatusBbtb"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:gravity="center"
+                                android:textAlignment="center"
+                                android:textSize="11sp"
+                                android:maxLines="2"
+                                tools:text="Gizi Baik" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ═══ LOG PENIMBANGAN (Tabs) ═══ -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/screen_margin"
+                android:layout_marginEnd="@dimen/screen_margin"
+                android:layout_marginBottom="@dimen/screen_margin"
+                app:cardCornerRadius="@dimen/radius_lg"
+                app:cardElevation="@dimen/elevation_card"
+                app:strokeWidth="1dp"
+                app:strokeColor="@color/card_border"
+                app:cardBackgroundColor="@color/card_surface">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/card_padding">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/space_md">
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="@string/log_penimbangan" android:textColor="@color/on_surface" android:textSize="@dimen/text_headline_sm" android:textStyle="bold" />
+                        <TextView android:id="@+id/tvLogCount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/primary" android:textSize="@dimen/text_body_sm" tools:text="Lihat Semua (6)" />
+                    </LinearLayout>
+
+                    <!-- Riwayat Pengukuran RecyclerView -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvRiwayatPengukuran"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnKonsultasiAi"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginStart="@dimen/screen_margin"
+                android:layout_marginEnd="@dimen/screen_margin"
+                android:layout_marginBottom="12dp"
+                android:text="Konsultasi Asisten AI Klinis"
+                android:textColor="@color/spruce"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:strokeColor="@color/spruce"
+                app:strokeWidth="1dp"
+                app:cornerRadius="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/screen_margin"
+                android:paddingEnd="@dimen/screen_margin"
+                android:paddingBottom="@dimen/space_xl">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnBukaKms"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/btn_height"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/space_sm"
+                    android:text="@string/buka_kms_lengkap"
+                    android:textColor="@color/primary"
+                    app:cornerRadius="@dimen/radius_lg"
+                    app:strokeColor="@color/primary" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnInputPengukuran"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/btn_height"
+                    android:layout_weight="1"
+                    android:text="@string/input_pengukuran"
+                    android:textColor="@color/white"
+                    app:backgroundTint="@color/primary"
+                    app:cornerRadius="@dimen/radius_lg" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- ═══ BOTTOM NAVIGATION ═══ -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E2E8F0" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigation"
+            style="@style/Widget.TumbuhSehat.BottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:background="@color/white"
+            app:elevation="0dp"
+            app:itemIconTint="@color/bottom_nav_color"
+            app:itemTextColor="@color/bottom_nav_color"
+            app:itemActiveIndicatorStyle="@style/Widget.TumbuhSehat.NoIndicator"
+            app:itemRippleColor="@android:color/transparent"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/bottom_nav_menu" />
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
